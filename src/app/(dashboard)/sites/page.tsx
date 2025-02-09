@@ -26,7 +26,6 @@ const SitePage: React.FC = () => {
 
   const { isPending, data } = useFetch();
 
-
   const columns = [
     {
       title: "No.",
