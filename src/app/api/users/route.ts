@@ -1,4 +1,5 @@
 import User from "@/models/User";
+import { handleError } from "@/utils/errorHandler";
 import { FindOptions, InferAttributes } from "sequelize";
 
 export async function GET() {
@@ -24,10 +25,7 @@ export async function POST(request: Request) {
     const data = await User.create({ name, password, role, SiteId });
     return Response.json(data);
   } catch (error) {
-    // todo: handle error
-    return Response.json(
-      { message: (error as Error).message },
-      { status: 500 }
-    );
+    const { status, body } = handleError(error);
+    return Response.json(body, { status });
   }
 }

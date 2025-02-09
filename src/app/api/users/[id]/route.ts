@@ -1,4 +1,5 @@
 import User from "@/models/User";
+import { handleError } from "@/utils/errorHandler";
 
 export async function PUT(
   request: Request,
@@ -17,10 +18,8 @@ export async function PUT(
     await user.reload();
     return Response.json(user);
   } catch (error) {
-    return Response.json(
-      { message: (error as Error).message },
-      { status: 400 }
-    );
+    const { status, body } = handleError(error);
+    return Response.json(body, { status });
   }
 }
 
@@ -41,7 +40,7 @@ export async function DELETE(
   } catch (error) {
     return Response.json(
       { message: (error as Error).message },
-      { status: 400 }
+      { status: 500 }
     );
   }
 }
