@@ -3,7 +3,7 @@ import React from "react";
 import { Modal, Form, Input, Switch } from "antd";
 import CancelButton from "./buttons/CancelButton";
 import SaveButton from "./buttons/SaveButton";
-import { CustomFormProps, Shift } from "../types";
+import { CustomFormProps, Shift } from "@/types";
 
 const ShiftForm: React.FC<CustomFormProps<Shift>> = ({ visible, isEditing, onCancel, onOk, errors, form }) => {
   return (

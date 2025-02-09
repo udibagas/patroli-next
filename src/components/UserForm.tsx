@@ -3,7 +3,7 @@ import React from "react";
 import { Modal, Form, Input, Select } from "antd";
 import CancelButton from "./buttons/CancelButton";
 import SaveButton from "./buttons/SaveButton";
-import { CustomFormProps, User } from "../types";
+import { CustomFormProps, User } from "@/types";
 
 const UserForm: React.FC<CustomFormProps<User>> = ({ visible, isEditing, onCancel, onOk, errors, form }) => {
 

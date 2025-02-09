@@ -3,7 +3,7 @@ import React from "react";
 import { Modal, Form, Input } from "antd";
 import CancelButton from "./buttons/CancelButton";
 import SaveButton from "./buttons/SaveButton";
-import { CustomFormProps, InspectionTemplate } from "../types";
+import { CustomFormProps, InspectionTemplate } from "@/types";
 
 const InspectionTemplateForm: React.FC<CustomFormProps<InspectionTemplate>> = ({ visible, isEditing, onCancel, onOk, errors, form }) => {
 

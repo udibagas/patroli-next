@@ -5,7 +5,7 @@ import CancelButton from "./buttons/CancelButton";
 import SaveButton from "./buttons/SaveButton";
 import { CustomFormProps, Site, Station } from "../types";
 import { useQuery } from "@tanstack/react-query";
-import { getItems } from "../api/client";
+import { getItems } from "@/utils/client";
 
 const StationForm: React.FC<CustomFormProps<Station>> = ({ visible, isEditing, onCancel, onOk, errors, form }) => {
   const { data: sites } = useQuery({
