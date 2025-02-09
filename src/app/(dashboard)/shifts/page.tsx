@@ -37,8 +37,8 @@ const ShiftPage: React.FC = () => {
     { title: "Mulai", dataIndex: "start", key: "start" },
     { title: "Selesai", dataIndex: "end", key: "end" },
     {
-      title: "Hari Berikutnya", render: (_: string, record: Shift) => {
-        return <Switch checked={record.nextDay} disabled />
+      title: "Hari Berikutnya", align: 'center' as const, render: (_: string, record: Shift) => {
+        return <Switch checked={record.nextDay} disabled size="small" />
       }
     },
     {

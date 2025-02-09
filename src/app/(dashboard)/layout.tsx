@@ -1,7 +1,5 @@
 'use client'
 import '@ant-design/v5-patch-for-react-19';
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Button, Layout, Menu, theme } from "antd";
 import Sider from "antd/es/layout/Sider";
@@ -21,16 +19,6 @@ import { Header, Content } from "antd/es/layout/layout";
 import Link from "next/link";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 const queryClient = new QueryClient();
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
@@ -48,51 +36,46 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
   ]
 
   return (
-    <html lang="en">
-      <title>PATROLI SISTEM PT. UNGARAN SARI GARMENTS</title>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
-        <QueryClientProvider client={queryClient}>
-          <AntdRegistry>
-            <Layout>
-              <Sider trigger={null} collapsible collapsed={collapsed}>
-                <div className="demo-logo-vertical" />
-                <Menu
-                  theme="dark"
-                  mode="inline"
-                  defaultSelectedKeys={['laporan']}
-                  items={items}
-                />
-              </Sider>
-              <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }}>
-                  <Button
-                    type="text"
-                    icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                    onClick={() => setCollapsed(!collapsed)}
-                    style={{
-                      fontSize: '16px',
-                      width: 64,
-                      height: 64,
-                    }}
-                  />
-                  <strong>SISTEM PATROLI PT. UNGARAN SARI GARMENTS</strong>
-                </Header>
-                <Content
-                  style={{
-                    margin: '24px 16px',
-                    padding: 24,
-                    minHeight: 'calc(100vh - 112px)',
-                    background: colorBgContainer,
-                    borderRadius: borderRadiusLG,
-                  }}
-                >
-                  {children}
-                </Content>
-              </Layout>
-            </Layout>
-          </AntdRegistry>
-        </QueryClientProvider>
-      </body>
-    </html>
+    <QueryClientProvider client={queryClient}>
+      <AntdRegistry>
+        <Layout>
+          <Sider trigger={null} collapsible collapsed={collapsed}>
+            <div className="demo-logo-vertical" />
+            <Menu
+              theme="dark"
+              mode="inline"
+              defaultSelectedKeys={['laporan']}
+              items={items}
+            />
+          </Sider>
+          <Layout>
+            <Header style={{ padding: 0, background: colorBgContainer }}>
+              <Button
+                type="text"
+                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                onClick={() => setCollapsed(!collapsed)}
+                style={{
+                  fontSize: '16px',
+                  width: 64,
+                  height: 64,
+                }}
+              />
+              <strong>SISTEM PATROLI PT. UNGARAN SARI GARMENTS</strong>
+            </Header>
+            <Content
+              style={{
+                margin: '24px 16px',
+                padding: 24,
+                minHeight: 'calc(100vh - 112px)',
+                background: colorBgContainer,
+                borderRadius: borderRadiusLG,
+              }}
+            >
+              {children}
+            </Content>
+          </Layout>
+        </Layout>
+      </AntdRegistry>
+    </QueryClientProvider>
   );
 }
