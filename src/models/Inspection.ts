@@ -7,6 +7,7 @@ import {
   Model,
 } from "sequelize";
 import sequelize from "@/utils/sequelize";
+import Shift from "./Shift";
 
 type ReportProps = {
   SiteId: number;
@@ -118,13 +119,13 @@ Inspection.belongsTo(sequelize.models.Station);
 Inspection.hasMany(sequelize.models.InspectionImage);
 Inspection.belongsTo(sequelize.models.Site);
 
-// Inspection.beforeCreate(async (instance) => {
-//   const shift = await sequelize.models.Shift.getCurrentShift();
-//   instance.shift = shift?.name || "-";
-//   // ini masih belum sesuai
-//   instance.reportDate = shift?.nextDay
-//     ? new Date(new Date().setDate(new Date().getDate() - 1))
-//     : new Date();
-// });
+Inspection.beforeCreate(async (instance) => {
+  const shift = await Shift.getCurrentShift();
+  instance.shift = shift?.name || "-";
+  // ini masih belum sesuai
+  instance.reportDate = shift?.nextDay
+    ? new Date(new Date().setDate(new Date().getDate() - 1))
+    : new Date();
+});
 
 export default Inspection;

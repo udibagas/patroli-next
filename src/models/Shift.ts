@@ -18,12 +18,12 @@ class Shift extends Model<
   declare end: string;
   declare nextDay: boolean;
 
-  static async getCurrentShift() {
+  static async getCurrentShift(): Promise<Shift | null> {
     const time = new Date()
       .toLocaleString("id-ID", { timeStyle: "short" })
       .replace(".", ":");
 
-    const records = await sequelize.query(
+    const records: Shift[] = await sequelize.query(
       `SELECT "name" FROM "Shifts" WHERE ? BETWEEN "start" AND "end"`,
       {
         replacements: [time],
