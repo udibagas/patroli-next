@@ -21,8 +21,8 @@ class Inspection extends Model<
 > {
   declare id: CreationOptional<number>;
   declare UserId: number;
-  declare shift: string;
-  declare reportDate: Date;
+  declare shift?: string;
+  declare reportDate?: Date;
   declare StationId: number;
   declare SiteId: number;
   declare result: string;
