@@ -7,6 +7,7 @@ import {
 } from "sequelize";
 import sequelize from "@/utils/sequelize";
 import { hashSync } from "bcrypt";
+import Site from "@/models/Site";
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<number>;
@@ -63,6 +64,8 @@ User.init(
     },
   }
 );
+
+User.belongsTo(Site);
 
 User.beforeSave((instance) => {
   if (instance.password) {

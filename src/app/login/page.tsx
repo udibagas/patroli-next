@@ -3,10 +3,8 @@ import React from "react";
 import { Form, Input, Button, message, FormProps } from "antd";
 import styles from './login.module.css'; // Import the CSS file for custom styles
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { AxiosError } from "axios";
-import { AxiosErrorResponseType } from "@/types";
 import client from "@/utils/client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type LoginValues = {
   email?: string;
@@ -14,18 +12,14 @@ type LoginValues = {
 };
 
 const LoginPage: React.FC = () => {
+  const router = useRouter()
   const onFinish: FormProps<LoginValues>['onFinish'] = async (values) => {
-    console.log("Success:", values);
     try {
       await client.post("/login", values);
       message.success("Login successful!");
-      redirect("/");
+      router.push("/");
     } catch (error) {
-      const axiosError = error as AxiosError;
-      const axiosErrorResponse = axiosError.response
-        ?.data as AxiosErrorResponseType;
-
-      message.error(axiosErrorResponse.message ?? axiosError.message);
+      console.error(error);
     }
   };
 
@@ -57,7 +51,7 @@ const LoginPage: React.FC = () => {
           >
             <Form.Item
               label="Username"
-              name="username"
+              name="name"
               rules={[{ required: true, message: "Please input your username!" }]}
             >
               <Input prefix={<UserOutlined />} placeholder="Username" />

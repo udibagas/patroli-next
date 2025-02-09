@@ -1,4 +1,3 @@
-import Site from "@/models/Site";
 import User from "@/models/User";
 
 export async function POST(request: Request) {
@@ -7,18 +6,18 @@ export async function POST(request: Request) {
   const options = {
     where: { name },
     attributes: { include: ["password"] },
-    include: Site,
   };
 
   try {
     const user = await User.findOne(options);
-
     if (!user) throw new Error("Username atau password salah");
 
     if (!user.verify(password)) {
       throw new Error("Username atau password salah");
     }
+
     const token = user.generateToken();
+
     return Response.json(
       { token, user },
       {
