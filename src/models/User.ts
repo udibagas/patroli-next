@@ -6,7 +6,8 @@ import {
   Model,
 } from "sequelize";
 import sequelize from "@/utils/sequelize";
-import { hashSync } from "bcrypt";
+import { compareSync, hashSync } from "bcrypt";
+import { sign } from "jsonwebtoken";
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<number>;
@@ -14,6 +15,15 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare role: "admin" | "user";
   declare password: string;
   declare SiteId: number;
+
+  verify(password: string) {
+    return compareSync(password, this.password);
+  }
+
+  generateToken() {
+    const { id, name, role, SiteId } = this;
+    return sign({ id, name, role, SiteId }, process.env.JWT_SECRET as string);
+  }
 }
 
 User.init(
