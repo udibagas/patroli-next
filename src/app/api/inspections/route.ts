@@ -6,13 +6,16 @@ import Station from "@/models/Station";
 import User from "@/models/User";
 import { handleError } from "@/utils/errorHandler";
 import sequelize from "@/utils/sequelize";
+import { NextRequest } from "next/server";
 import { FindAndCountOptions, InferAttributes } from "sequelize";
 
-export async function GET(request: Request) {
-  const page = parseInt(request.query.page) || 1; // Default to page 1 if not specified
-  const limit = parseInt(request.query.limit) || 10; // Default to 10 items per page if not specified
+export async function GET(request: NextRequest) {
+  const { searchParams } = request.nextUrl;
+  const page = parseInt(searchParams.get("page") as string) || 1; // Default to page 1 if not specified
+  const limit = parseInt(searchParams.get("limit") as string) || 10; // Default to 10 items per page if not specified
   const offset = (page - 1) * limit;
-  const { SiteId } = request.user;
+  // const { SiteId } = request.user;
+  const SiteId = null;
 
   const options: Omit<
     FindAndCountOptions<InferAttributes<Inspection, { omit: never }>>,
