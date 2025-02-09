@@ -1,3 +1,5 @@
+import Area from "@/models/Area";
+import Site from "@/models/Site";
 import Station from "@/models/Station";
 import { handleError } from "@/utils/errorHandler";
 import { FindOptions, InferAttributes } from "sequelize";
@@ -5,6 +7,16 @@ import { FindOptions, InferAttributes } from "sequelize";
 export async function GET() {
   const options: FindOptions<InferAttributes<Station, { omit: never }>> = {
     order: [["name", "ASC"]],
+    include: [
+      {
+        model: Site,
+        attributes: ["name"],
+      },
+      {
+        model: Area,
+        attributes: ["name"],
+      },
+    ],
   };
 
   try {

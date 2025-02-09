@@ -8,6 +8,10 @@ import {
 } from "sequelize";
 import sequelize from "@/utils/sequelize";
 import Shift from "./Shift";
+import User from "./User";
+import Station from "./Station";
+import InspectionImage from "./InspectionImage";
+import Site from "./Site";
 
 type ReportProps = {
   SiteId: number;
@@ -114,10 +118,10 @@ Inspection.init(
   }
 );
 
-Inspection.belongsTo(sequelize.models.User);
-Inspection.belongsTo(sequelize.models.Station);
-Inspection.hasMany(sequelize.models.InspectionImage);
-Inspection.belongsTo(sequelize.models.Site);
+Inspection.belongsTo(User);
+Inspection.belongsTo(Station);
+Inspection.hasMany(InspectionImage);
+Inspection.belongsTo(Site);
 
 Inspection.beforeCreate(async (instance) => {
   const shift = await Shift.getCurrentShift();

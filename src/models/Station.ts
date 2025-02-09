@@ -5,8 +5,11 @@ import {
   InferAttributes,
   InferCreationAttributes,
   Model,
+  NonAttribute,
 } from "sequelize";
 import sequelize from "@/utils/sequelize";
+import Area from "./Area";
+import Site from "./Site";
 
 class Station extends Model<
   InferAttributes<Station>,
@@ -16,6 +19,8 @@ class Station extends Model<
   declare code: string;
   declare name: string;
   declare SiteId: number;
+  declare Areas?: NonAttribute<Area[]>;
+  declare Site?: NonAttribute<Site>;
 
   static findByName(name: string, SiteId: number) {
     const options: FindOptions<InferAttributes<Station, { omit: never }>> = {
@@ -71,7 +76,7 @@ Station.init(
   }
 );
 
-Station.hasMany(sequelize.models.Area);
-Station.belongsTo(sequelize.models.Site);
+Station.hasMany(Area);
+Station.belongsTo(Site);
 
 export default Station;

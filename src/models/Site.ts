@@ -46,9 +46,4 @@ Site.init(
   }
 );
 
-Site.hasMany(sequelize.models.Station);
-Site.hasMany(sequelize.models.Inspection);
-Site.hasMany(sequelize.models.InspectionImage);
-Site.hasMany(sequelize.models.User);
-
 export default Site;

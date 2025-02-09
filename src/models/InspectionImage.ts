@@ -69,7 +69,4 @@ InspectionImage.init(
   }
 );
 
-InspectionImage.belongsTo(sequelize.models.Inspection);
-InspectionImage.belongsTo(sequelize.models.Site);
-
 export default InspectionImage;

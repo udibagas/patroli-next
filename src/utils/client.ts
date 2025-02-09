@@ -2,7 +2,7 @@ import axios from "axios";
 import { message } from "antd";
 
 const client = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "http://localhost:3001/api",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
