@@ -2,9 +2,9 @@
 import React from "react";
 import { Button, Table } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
-import PageHeader from "./components/PageHeader";
-import { PaginatedData, Inspection } from "./types";
-import useCrud from "./hooks/useCrud";
+import PageHeader from "@/components/PageHeader";
+import { PaginatedData, Inspection } from "../types";
+import useCrud from "@/hooks/useCrud";
 import moment from "moment";
 
 const Recipient: React.FC = () => {

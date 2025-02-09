@@ -1,13 +1,13 @@
 'use client';
 import React from "react";
 import { Table } from "antd";
-import SiteForm from "../components/SiteForm";
-import PageHeader from "../components/PageHeader";
+import SiteForm from "@/components/SiteForm";
+import PageHeader from "@/components/PageHeader";
 import { ReloadOutlined } from "@ant-design/icons";
-import ActionButton from "../components/buttons/ActionButton";
-import AddButton from "../components/buttons/AddButton";
-import { Site } from "../types";
-import useCrud from "../hooks/useCrud";
+import ActionButton from "@/components/buttons/ActionButton";
+import AddButton from "@/components/buttons/AddButton";
+import { Site } from "@/types";
+import useCrud from "@/hooks/useCrud";
 
 const SitePage: React.FC = () => {
   const {

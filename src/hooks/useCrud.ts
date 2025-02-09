@@ -4,9 +4,14 @@ import { Form, message, Modal } from "antd";
 import { useCallback, useMemo, useState } from "react";
 import { AxiosErrorResponseType, RecursivePartial } from "../types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createItem, deleteItem, getItems, updateItem } from "../api/client";
+import {
+  createItem,
+  deleteItem,
+  getItems,
+  updateItem,
+} from "../app/api/client";
 import { AxiosError } from "axios";
-import apolloClient from "../apollo/client";
+import apolloClient from "@/apollo/client";
 
 const useCrud = <T extends { id?: number }>(
   endpoint: string,

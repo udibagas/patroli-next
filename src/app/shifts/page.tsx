@@ -1,13 +1,13 @@
 'use client';
 import React from "react";
 import { Switch, Table } from "antd";
-import ShiftForm from "../components/ShiftForm";
-import PageHeader from "../components/PageHeader";
+import ShiftForm from "@/components/ShiftForm";
+import PageHeader from "@/components/PageHeader";
 import { ReloadOutlined } from "@ant-design/icons";
-import ActionButton from "../components/buttons/ActionButton";
-import AddButton from "../components/buttons/AddButton";
-import { Shift } from "../types";
-import useCrud from "../hooks/useCrud";
+import ActionButton from "@/components/buttons/ActionButton";
+import AddButton from "@/components/buttons/AddButton";
+import { Shift } from "@/types";
+import useCrud from "@/hooks/useCrud";
 
 const ShiftPage: React.FC = () => {
   const {

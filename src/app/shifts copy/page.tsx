@@ -1,15 +1,15 @@
 'use client';
 import React from "react";
-import { Table } from "antd";
-import StationForm from "@/components/StationForm";
-import PageHeader from "@/components/PageHeader";
+import { Switch, Table } from "antd";
+import ShiftForm from "../components/ShiftForm";
+import PageHeader from "../components/PageHeader";
 import { ReloadOutlined } from "@ant-design/icons";
-import ActionButton from "@/components/buttons/ActionButton";
-import AddButton from "@/components/buttons/AddButton";
-import { Station } from "@/types";
-import useCrud from "@/hooks/useCrud";
+import ActionButton from "../components/buttons/ActionButton";
+import AddButton from "../components/buttons/AddButton";
+import { Shift } from "../../types";
+import useCrud from "../../hooks/useCrud";
 
-const StationPage: React.FC = () => {
+const ShiftPage: React.FC = () => {
   const {
     useFetch,
     refreshData,
@@ -22,18 +22,23 @@ const StationPage: React.FC = () => {
     showForm,
     errors,
     isEditing
-  } = useCrud<Station>("/stations", "stations");
+  } = useCrud<Shift>("/shifts", "shifts");
 
   const { isPending, data } = useFetch();
 
 
   const columns = [
-    { title: "Kode", dataIndex: "code", key: "code", width: 60 },
-    { title: "Site", dataIndex: ["Site", "name"], key: "site" },
-    { title: "Nama", dataIndex: "name", key: "name" },
     {
-      title: "Area", render: (_: string, record: Station) => {
-        return record.Areas.map((area) => area.name).join(", ");
+      title: "No.",
+      width: 60,
+      render: (_: string, __: Shift, index: number) => index + 1
+    },
+    { title: "Nama", dataIndex: "name", key: "name" },
+    { title: "Mulai", dataIndex: "start", key: "start" },
+    { title: "Selesai", dataIndex: "end", key: "end" },
+    {
+      title: "Hari Berikutnya", render: (_: string, record: Shift) => {
+        return <Switch checked={record.nextDay} disabled />
       }
     },
     {
@@ -41,7 +46,7 @@ const StationPage: React.FC = () => {
       key: "action",
       align: "center" as const,
       width: 80,
-      render: (_: string, record: Station) => (
+      render: (_: string, record: Shift) => (
         <ActionButton
           onEdit={() => handleEdit(record)}
           onDelete={() => handleDelete(record.id)}
@@ -52,8 +57,8 @@ const StationPage: React.FC = () => {
 
   return (
     <>
-      <PageHeader title="Station" subtitle="Kelola data station">
-        <AddButton label="Tambah Station" onClick={handleAdd} />
+      <PageHeader title="Shift" subtitle="Kelola data shift">
+        <AddButton label="Tambah Shift" onClick={handleAdd} />
       </PageHeader>
 
       <Table
@@ -63,14 +68,14 @@ const StationPage: React.FC = () => {
         dataSource={data}
         rowKey="id"
         pagination={false}
-        onRow={(record: Station) => {
+        onRow={(record: Shift) => {
           return {
             onDoubleClick: () => handleEdit(record),
           };
         }}
       />
 
-      <StationForm
+      <ShiftForm
         visible={showForm}
         isEditing={isEditing}
         errors={errors}
@@ -82,4 +87,4 @@ const StationPage: React.FC = () => {
   );
 };
 
-export default StationPage;
+export default ShiftPage;

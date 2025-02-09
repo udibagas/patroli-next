@@ -1,15 +1,15 @@
 'use client';
 import React from "react";
 import { Table } from "antd";
-import StationForm from "@/components/StationForm";
-import PageHeader from "@/components/PageHeader";
+import UserForm from "../components/UserForm";
+import PageHeader from "../components/PageHeader";
 import { ReloadOutlined } from "@ant-design/icons";
-import ActionButton from "@/components/buttons/ActionButton";
-import AddButton from "@/components/buttons/AddButton";
-import { Station } from "@/types";
-import useCrud from "@/hooks/useCrud";
+import ActionButton from "../components/buttons/ActionButton";
+import AddButton from "../components/buttons/AddButton";
+import { User } from "../../types";
+import useCrud from "../../hooks/useCrud";
 
-const StationPage: React.FC = () => {
+const UserPage: React.FC = () => {
   const {
     useFetch,
     refreshData,
@@ -22,26 +22,25 @@ const StationPage: React.FC = () => {
     showForm,
     errors,
     isEditing
-  } = useCrud<Station>("/stations", "stations");
+  } = useCrud<User>("/users", "users");
 
   const { isPending, data } = useFetch();
 
 
   const columns = [
-    { title: "Kode", dataIndex: "code", key: "code", width: 60 },
-    { title: "Site", dataIndex: ["Site", "name"], key: "site" },
-    { title: "Nama", dataIndex: "name", key: "name" },
     {
-      title: "Area", render: (_: string, record: Station) => {
-        return record.Areas.map((area) => area.name).join(", ");
-      }
+      title: "No.",
+      width: 60,
+      render: (_: string, __: User, index: number) => index + 1
     },
+    { title: "Name", dataIndex: "name", key: "name" },
+    { title: "Role", dataIndex: "role", key: "role" },
     {
       title: <ReloadOutlined onClick={refreshData} />,
       key: "action",
       align: "center" as const,
       width: 80,
-      render: (_: string, record: Station) => (
+      render: (_: string, record: User) => (
         <ActionButton
           onEdit={() => handleEdit(record)}
           onDelete={() => handleDelete(record.id)}
@@ -52,8 +51,8 @@ const StationPage: React.FC = () => {
 
   return (
     <>
-      <PageHeader title="Station" subtitle="Kelola data station">
-        <AddButton label="Tambah Station" onClick={handleAdd} />
+      <PageHeader title="User" subtitle="Kelola data pengguna">
+        <AddButton label="Tambah User" onClick={handleAdd} />
       </PageHeader>
 
       <Table
@@ -63,14 +62,14 @@ const StationPage: React.FC = () => {
         dataSource={data}
         rowKey="id"
         pagination={false}
-        onRow={(record: Station) => {
+        onRow={(record: User) => {
           return {
             onDoubleClick: () => handleEdit(record),
           };
         }}
       />
 
-      <StationForm
+      <UserForm
         visible={showForm}
         isEditing={isEditing}
         errors={errors}
@@ -82,4 +81,4 @@ const StationPage: React.FC = () => {
   );
 };
 
-export default StationPage;
+export default UserPage;

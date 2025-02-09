@@ -1,13 +1,13 @@
 'use client';
 import React from "react";
 import { Table } from "antd";
-import InspectionTemplateForm from "../components/InspectionTemplateForm";
-import PageHeader from "../components/PageHeader";
+import InspectionTemplateForm from "@/components/InspectionTemplateForm";
+import PageHeader from "@/components/PageHeader";
 import { ReloadOutlined } from "@ant-design/icons";
-import ActionButton from "../components/buttons/ActionButton";
-import AddButton from "../components/buttons/AddButton";
-import { InspectionTemplate } from "../types";
-import useCrud from "../hooks/useCrud";
+import ActionButton from "@/components/buttons/ActionButton";
+import AddButton from "@/components/buttons/AddButton";
+import { InspectionTemplate } from "@/types";
+import useCrud from "@/hooks/useCrud";
 
 const InspectionTemplatePage: React.FC = () => {
   const {
