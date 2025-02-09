@@ -4,12 +4,7 @@ import { Form, message, Modal } from "antd";
 import { useCallback, useMemo, useState } from "react";
 import { AxiosErrorResponseType, RecursivePartial } from "../types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  createItem,
-  deleteItem,
-  getItems,
-  updateItem,
-} from "../app/api/client";
+import { createItem, deleteItem, getItems, updateItem } from "@/utils/client";
 import { AxiosError } from "axios";
 import apolloClient from "@/apollo/client";
 

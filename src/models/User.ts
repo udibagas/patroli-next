@@ -5,7 +5,7 @@ import {
   InferCreationAttributes,
   Model,
 } from "sequelize";
-import sequelize from "@/lib/sequelize";
+import sequelize from "@/utils/sequelize";
 import { hashSync } from "bcrypt";
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
