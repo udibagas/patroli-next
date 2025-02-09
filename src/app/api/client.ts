@@ -1,6 +1,5 @@
 import axios from "axios";
 import { message } from "antd";
-import { FileType } from "../types";
 
 const client = axios.create({
   baseURL: "http://localhost:3000/api",
@@ -73,13 +72,6 @@ export async function updateItem<T>(
 
 export function deleteItem(endpoint: string, id: number): Promise<void> {
   return client.delete(`${endpoint}/${id}`);
-}
-
-export async function uploadFile(file: File): Promise<FileType> {
-  const formData = new FormData();
-  formData.append("file", file);
-  const { data } = await client.post("/upload", formData);
-  return data;
 }
 
 export default client;
