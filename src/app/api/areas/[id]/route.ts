@@ -1,5 +1,7 @@
 import Area from "@/models/Area";
 
+export const dynamic = "force-static";
+
 export async function DELETE(
   _: Request,
   { params }: { params: Promise<{ id: number }> }

@@ -39,7 +39,7 @@ const LoginPage: React.FC = () => {
           borderRadius: '8px 0 0 8px',
           backgroundColor: 'white',
         }}>
-          <h1 className="text-3xl mb-6">Login</h1>
+          <div className="text-3xl mb-6">Login</div>
           <Form
             style={{ width: 300 }}
             variant="filled"

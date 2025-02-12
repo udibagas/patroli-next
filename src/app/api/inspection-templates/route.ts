@@ -2,6 +2,8 @@ import InspectionTemplate from "@/models/InspectionTemplate";
 import { handleError } from "@/utils/errorHandler";
 import { FindOptions, InferAttributes } from "sequelize";
 
+export const dynamic = "force-static";
+
 export async function GET() {
   const options: FindOptions<
     InferAttributes<InspectionTemplate, { omit: never }>

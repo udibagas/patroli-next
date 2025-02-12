@@ -2,6 +2,8 @@ import User from "@/models/User";
 import { handleError } from "@/utils/errorHandler";
 import { FindOptions, InferAttributes } from "sequelize";
 
+export const dynamic = "force-static";
+
 export async function GET() {
   const options: FindOptions<InferAttributes<User, { omit: never }>> = {
     order: [["name", "ASC"]],

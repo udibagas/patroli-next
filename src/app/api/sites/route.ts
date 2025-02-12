@@ -2,6 +2,8 @@ import Site from "@/models/Site";
 import { handleError } from "@/utils/errorHandler";
 import { FindOptions, InferAttributes } from "sequelize";
 
+export const dynamic = "force-static";
+
 export async function GET() {
   const options: FindOptions<InferAttributes<Site, { omit: never }>> = {
     order: [["name", "ASC"]],

@@ -1,3 +1,4 @@
+import { ExtendedRequest } from "@/middleware-old";
 import Area from "@/models/Area";
 import Inspection from "@/models/Inspection";
 import InspectionImage from "@/models/InspectionImage";
@@ -6,16 +7,16 @@ import Station from "@/models/Station";
 import User from "@/models/User";
 import { handleError } from "@/utils/errorHandler";
 import sequelize from "@/utils/sequelize";
-import { NextRequest } from "next/server";
 import { FindAndCountOptions, InferAttributes } from "sequelize";
 
-export async function GET(request: NextRequest) {
+export const dynamic = "force-static";
+
+export async function GET(request: ExtendedRequest) {
   const { searchParams } = request.nextUrl;
   const page = parseInt(searchParams.get("page") as string) || 1; // Default to page 1 if not specified
   const limit = parseInt(searchParams.get("limit") as string) || 10; // Default to 10 items per page if not specified
   const offset = (page - 1) * limit;
-  // const { SiteId } = request.user;
-  const SiteId = null;
+  const SiteId = request.user?.SiteId;
 
   const options: Omit<
     FindAndCountOptions<InferAttributes<Inspection, { omit: never }>>,
@@ -78,8 +79,8 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: Request) {
-  const { id: UserId, SiteId } = request.user;
+export async function POST(request: ExtendedRequest) {
+  const { id: UserId, SiteId } = request.user ?? ({} as User);
   const { location, result } = await request.json();
 
   try {

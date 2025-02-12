@@ -6,7 +6,6 @@ import {
   Model,
 } from "sequelize";
 import sequelize from "@/utils/sequelize";
-import User from "./User";
 
 class Site extends Model<InferAttributes<Site>, InferCreationAttributes<Site>> {
   declare id: CreationOptional<number>;
@@ -46,7 +45,5 @@ Site.init(
     timestamps: false,
   }
 );
-
-// Site.hasMany(User);
 
 export default Site;

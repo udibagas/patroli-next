@@ -1,6 +1,9 @@
 import User from "@/models/User";
+import { NextRequest } from "next/server";
 
-export async function POST(request: Request) {
+export const dynamic = "force-static";
+
+export async function POST(request: NextRequest) {
   const { name, password } = await request.json();
 
   const options = {
@@ -16,13 +19,16 @@ export async function POST(request: Request) {
       throw new Error("Username atau password salah");
     }
 
-    const token = user.generateToken();
-
+    const token = await user.generateToken();
     return Response.json(
       { token, user },
       {
         status: 200,
-        headers: { "Set-Cookie": `token=${token}; HttpOnly` },
+        headers: {
+          "Set-Cookie": `token=${token}; HttpOnly; Path=/; SameSite=Strict; Max-Age=${
+            60 * 60 * 24 * 7
+          }`,
+        },
       }
     );
   } catch (error) {

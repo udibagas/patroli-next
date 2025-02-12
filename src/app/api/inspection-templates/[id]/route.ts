@@ -1,6 +1,8 @@
 import InspectionTemplate from "@/models/InspectionTemplate";
 import { handleError } from "@/utils/errorHandler";
 
+export const dynamic = "force-static";
+
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: number }> }

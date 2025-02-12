@@ -6,8 +6,8 @@ import {
   Model,
 } from "sequelize";
 import sequelize from "@/utils/sequelize";
-import { compareSync, hashSync } from "bcrypt";
-import { sign } from "jsonwebtoken";
+import { hashSync, compareSync } from "bcrypt";
+import { SignJWT } from "jose";
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<number>;
@@ -22,7 +22,9 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 
   generateToken() {
     const { id, name, role, SiteId } = this;
-    return sign({ id, name, role, SiteId }, process.env.JWT_SECRET as string);
+    return new SignJWT({ id, name, role, SiteId })
+      .setProtectedHeader({ alg: "HS256" })
+      .sign(new TextEncoder().encode(process.env.JWT_SECRET));
   }
 }
 
