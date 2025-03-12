@@ -1,7 +1,6 @@
 import Site from "@/models/Site";
 import { handleError } from "@/utils/errorHandler";
-
-export const dynamic = "force-static";
+import { revalidatePath } from "next/cache";
 
 export async function PUT(
   request: Request,
@@ -18,6 +17,7 @@ export async function PUT(
 
     await site.update({ code, name });
     await site.reload();
+    revalidatePath("/sites");
     return Response.json(site);
   } catch (error) {
     const { status, body } = handleError(error);
@@ -38,6 +38,7 @@ export async function DELETE(
     }
 
     await area.destroy();
+    revalidatePath("/sites");
     return Response.json({ message: "Site deleted" });
   } catch (error) {
     return Response.json(

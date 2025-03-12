@@ -1,8 +1,7 @@
 import InspectionTemplate from "@/models/InspectionTemplate";
 import { handleError } from "@/utils/errorHandler";
+import { revalidatePath } from "next/cache";
 import { FindOptions, InferAttributes } from "sequelize";
-
-export const dynamic = "force-static";
 
 export async function GET() {
   const options: FindOptions<
@@ -27,7 +26,8 @@ export async function POST(request: Request) {
 
   try {
     const data = await InspectionTemplate.create({ result });
-    return Response.json(data);
+    revalidatePath("/inspection-templates");
+    return Response.json(data, { status: 201 });
   } catch (error) {
     const { status, body } = handleError(error);
     return Response.json(body, { status });

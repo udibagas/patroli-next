@@ -1,7 +1,6 @@
 import User from "@/models/User";
 import { handleError } from "@/utils/errorHandler";
-
-export const dynamic = "force-static";
+import { revalidatePath } from "next/cache";
 
 export async function PUT(
   request: Request,
@@ -18,6 +17,7 @@ export async function PUT(
 
     await user.update({ name, password, role, SiteId });
     await user.reload();
+    revalidatePath("/users");
     return Response.json(user);
   } catch (error) {
     const { status, body } = handleError(error);
@@ -38,6 +38,7 @@ export async function DELETE(
     }
 
     await user.destroy();
+    revalidatePath("/users");
     return Response.json({ message: "User deleted" });
   } catch (error) {
     return Response.json(

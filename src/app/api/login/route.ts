@@ -1,8 +1,6 @@
 import User from "@/models/User";
 import { NextRequest } from "next/server";
 
-export const dynamic = "force-static";
-
 export async function POST(request: NextRequest) {
   const { name, password } = await request.json();
 

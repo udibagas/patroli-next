@@ -1,4 +1,4 @@
-import { ExtendedRequest } from "@/middleware-old";
+import { ExtendedRequest } from "@/types";
 import Area from "@/models/Area";
 import Inspection from "@/models/Inspection";
 import InspectionImage from "@/models/InspectionImage";
@@ -8,8 +8,7 @@ import User from "@/models/User";
 import { handleError } from "@/utils/errorHandler";
 import sequelize from "@/utils/sequelize";
 import { FindAndCountOptions, InferAttributes } from "sequelize";
-
-export const dynamic = "force-static";
+import { revalidatePath } from "next/cache";
 
 export async function GET(request: ExtendedRequest) {
   const { searchParams } = request.nextUrl;
@@ -123,6 +122,7 @@ export async function POST(request: ExtendedRequest) {
       return inspection;
     });
 
+    revalidatePath("/inspections");
     return Response.json(inspection, { status: 201 });
   } catch (error) {
     const { status, body } = handleError(error);

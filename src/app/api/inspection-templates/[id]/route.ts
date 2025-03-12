@@ -1,7 +1,6 @@
 import InspectionTemplate from "@/models/InspectionTemplate";
 import { handleError } from "@/utils/errorHandler";
-
-export const dynamic = "force-static";
+import { revalidatePath } from "next/cache";
 
 export async function PUT(
   request: Request,
@@ -21,6 +20,7 @@ export async function PUT(
 
     await template.update({ result });
     await template.reload();
+    revalidatePath("/inspection-templates");
     return Response.json(template);
   } catch (error) {
     const { status, body } = handleError(error);
@@ -44,6 +44,7 @@ export async function DELETE(
     }
 
     await template.destroy();
+    revalidatePath("/inspection-templates");
     return Response.json({ message: "InspectionTemplate deleted" });
   } catch (error) {
     return Response.json(

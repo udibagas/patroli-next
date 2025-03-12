@@ -1,7 +1,6 @@
 import Station from "@/models/Station";
 import { handleError } from "@/utils/errorHandler";
-
-export const dynamic = "force-static";
+import { revalidatePath } from "next/cache";
 
 export async function PUT(
   request: Request,
@@ -18,6 +17,7 @@ export async function PUT(
 
     await station.update({ code, name });
     await station.reload();
+    revalidatePath("/stations");
     return Response.json(station);
   } catch (error) {
     const { status, body } = handleError(error);
@@ -38,6 +38,7 @@ export async function DELETE(
     }
 
     await station.destroy();
+    revalidatePath("/stations");
     return Response.json({ message: "Station deleted" });
   } catch (error) {
     return Response.json(

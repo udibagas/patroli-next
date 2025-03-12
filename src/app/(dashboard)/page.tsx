@@ -7,7 +7,7 @@ import { PaginatedData, Inspection } from "@/types";
 import useCrud from "@/hooks/useCrud";
 import moment from "moment";
 
-const Recipient: React.FC = () => {
+const Home: React.FC = () => {
   const {
     useFetch,
     refreshData,
@@ -82,7 +82,7 @@ const Recipient: React.FC = () => {
         }}
       />
 
-      {/* <RecipientForm
+      {/* <HomeForm
         visible={showForm}
         isEditing={isEditing}
         onCancel={handleModalClose}
@@ -94,4 +94,4 @@ const Recipient: React.FC = () => {
   );
 };
 
-export default Recipient;
+export default Home;

@@ -1,9 +1,6 @@
-'use client';
-
-import '@ant-design/v5-patch-for-react-19';
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,16 +12,22 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const metadata: Metadata = {
+  title: "USG Patroli System",
+  description: "",
+};
 
-export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
-
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <title>PATROLI SISTEM PT. UNGARAN SARI GARMENTS</title>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <AntdRegistry>
-          {children}
-        </AntdRegistry>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
       </body>
     </html>
   );

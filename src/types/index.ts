@@ -1,4 +1,5 @@
 import { FormInstance } from "antd";
+import { NextRequest } from "next/server";
 
 export type Site = {
   id: number;
@@ -61,6 +62,7 @@ export type User = {
   id: number;
   name: string;
   role: "admin" | "user";
+  SiteId: number;
 };
 
 export type PaginatedData<T> = {
@@ -94,3 +96,7 @@ export type CustomFormProps<T> = {
   errors: Record<string, string>;
   form: FormInstance<T>;
 };
+
+export interface ExtendedRequest extends NextRequest {
+  user?: User;
+}

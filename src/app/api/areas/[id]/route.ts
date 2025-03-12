@@ -1,10 +1,9 @@
 import Area from "@/models/Area";
-
-export const dynamic = "force-static";
+import { revalidatePath } from "next/cache";
 
 export async function DELETE(
   _: Request,
-  { params }: { params: Promise<{ id: number }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
 
@@ -15,6 +14,7 @@ export async function DELETE(
     }
 
     await area.destroy();
+    revalidatePath("/areas");
     return Response.json({ message: "Area deleted" });
   } catch (error) {
     return Response.json(

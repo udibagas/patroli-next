@@ -1,7 +1,6 @@
 import Shift from "@/models/Shift";
 import { handleError } from "@/utils/errorHandler";
-
-export const dynamic = "force-static";
+import { revalidatePath } from "next/cache";
 
 export async function PUT(
   request: Request,
@@ -18,6 +17,7 @@ export async function PUT(
 
     await shift.update({ name, start, end, nextDay });
     await shift.reload();
+    revalidatePath("/shifts");
     return Response.json(shift);
   } catch (error) {
     const { status, body } = handleError(error);
@@ -38,6 +38,7 @@ export async function DELETE(
     }
 
     await shift.destroy();
+    revalidatePath("/shifts");
     return Response.json({ message: "Shift deleted" });
   } catch (error) {
     return Response.json(

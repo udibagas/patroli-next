@@ -1,8 +1,7 @@
 import Shift from "@/models/Shift";
 import { handleError } from "@/utils/errorHandler";
+import { revalidatePath } from "next/cache";
 import { FindOptions, InferAttributes } from "sequelize";
-
-export const dynamic = "force-static";
 
 export async function GET() {
   const options: FindOptions<InferAttributes<Shift, { omit: never }>> = {
@@ -25,7 +24,8 @@ export async function POST(request: Request) {
 
   try {
     const data = await Shift.create({ name, start, end, nextDay });
-    return Response.json(data);
+    revalidatePath("/shifts");
+    return Response.json(data, { status: 201 });
   } catch (error) {
     const { status, body } = handleError(error);
     return Response.json(body, { status });

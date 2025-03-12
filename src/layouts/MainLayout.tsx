@@ -18,10 +18,11 @@ import { Header, Content } from "antd/es/layout/layout";
 import Link from "next/link";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
+import RootLayout from './RootLayout';
 
 const queryClient = new QueryClient();
 
-export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
+export default function MainLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   const [collapsed, setCollapsed] = useState(false);
   const { token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
   const pathname = usePathname();
@@ -37,44 +38,46 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
   ]
 
   return (
-    <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[pathname]}
-          items={items}
-        />
-      </Sider>
+    <RootLayout>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
+        <Sider trigger={null} collapsible collapsed={collapsed}>
+          <div className="demo-logo-vertical" />
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={[pathname]}
+            items={items}
           />
-          <strong>SISTEM PATROLI PT. UNGARAN SARI GARMENTS</strong>
-        </Header>
-        <Content
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 'calc(100vh - 112px)',
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </Content>
+        </Sider>
+        <Layout>
+          <Header style={{ padding: 0, background: colorBgContainer }}>
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+              style={{
+                fontSize: '16px',
+                width: 64,
+                height: 64,
+              }}
+            />
+            <strong>SISTEM PATROLI PT. UNGARAN SARI GARMENTS</strong>
+          </Header>
+          <Content
+            style={{
+              margin: '24px 16px',
+              padding: 24,
+              minHeight: 'calc(100vh - 112px)',
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+          >
+            <QueryClientProvider client={queryClient}>
+              {children}
+            </QueryClientProvider>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </RootLayout>
   );
 }

@@ -2,9 +2,8 @@ import Area from "@/models/Area";
 import Site from "@/models/Site";
 import Station from "@/models/Station";
 import { handleError } from "@/utils/errorHandler";
+import { revalidatePath } from "next/cache";
 import { FindOptions, InferAttributes } from "sequelize";
-
-export const dynamic = "force-static";
 
 export async function GET() {
   const options: FindOptions<InferAttributes<Station, { omit: never }>> = {
@@ -37,6 +36,7 @@ export async function POST(request: Request) {
 
   try {
     const data = await Station.create({ code, name, SiteId });
+    revalidatePath("/stations");
     return Response.json(data);
   } catch (error) {
     const { status, body } = handleError(error);
