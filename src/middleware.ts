@@ -3,18 +3,22 @@ import { decrypt } from "./app/lib/session";
 
 export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  let session;
 
   try {
-    const session = req.cookies.get("session")?.value;
+    session = req.cookies.get("session")?.value;
 
     if (!session) {
-      throw new Error("Unauthorized");
+      const auth = req.headers.get("authorization");
+      if (!auth) throw new Error("Unauthorized");
+
+      const [scheme, token] = auth.split(" ");
+      if (scheme !== "Bearer") throw new Error("Invalid scheme");
+      if (!token) throw new Error("Invalid token");
+      session = token;
     }
 
-    const payload = await decrypt(session);
-    const response = NextResponse.next();
-    response.cookies.set("userId", payload._id as string);
-    return response;
+    return decryptAndResponse(session);
   } catch (error: unknown) {
     console.error((error as Error).message);
 
@@ -26,8 +30,15 @@ export default async function middleware(req: NextRequest) {
   }
 }
 
+async function decryptAndResponse(session: string | undefined) {
+  const payload = await decrypt(session);
+  const response = NextResponse.next();
+  response.cookies.set("UserId", payload.id as string);
+  return response;
+}
+
 export const config = {
   matcher: [
-    "/((?!login|register|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/((?!login|register|api/login|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
   ],
 };

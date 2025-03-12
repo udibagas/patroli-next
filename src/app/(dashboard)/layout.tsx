@@ -1,5 +1,4 @@
 'use client';
-import '@ant-design/v5-patch-for-react-19';
 import { Button, Layout, Menu, theme } from "antd";
 import Sider from "antd/es/layout/Sider";
 import {
@@ -18,7 +17,6 @@ import { Header, Content } from "antd/es/layout/layout";
 import Link from "next/link";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
-import RootLayout from './RootLayout';
 
 const queryClient = new QueryClient();
 
@@ -38,46 +36,44 @@ export default function MainLayout({ children, }: Readonly<{ children: React.Rea
   ]
 
   return (
-    <RootLayout>
+    <Layout>
+      <Sider trigger={null} collapsible collapsed={collapsed}>
+        <div className="demo-logo-vertical" />
+        <Menu
+          theme="dark"
+          mode="inline"
+          selectedKeys={[pathname]}
+          items={items}
+        />
+      </Sider>
       <Layout>
-        <Sider trigger={null} collapsible collapsed={collapsed}>
-          <div className="demo-logo-vertical" />
-          <Menu
-            theme="dark"
-            mode="inline"
-            selectedKeys={[pathname]}
-            items={items}
-          />
-        </Sider>
-        <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }}>
-            <Button
-              type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
-              style={{
-                fontSize: '16px',
-                width: 64,
-                height: 64,
-              }}
-            />
-            <strong>SISTEM PATROLI PT. UNGARAN SARI GARMENTS</strong>
-          </Header>
-          <Content
+        <Header style={{ padding: 0, background: colorBgContainer }}>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
             style={{
-              margin: '24px 16px',
-              padding: 24,
-              minHeight: 'calc(100vh - 112px)',
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
+              fontSize: '16px',
+              width: 64,
+              height: 64,
             }}
-          >
-            <QueryClientProvider client={queryClient}>
-              {children}
-            </QueryClientProvider>
-          </Content>
-        </Layout>
+          />
+          <strong>SISTEM PATROLI PT. UNGARAN SARI GARMENTS</strong>
+        </Header>
+        <Content
+          style={{
+            margin: '24px 16px',
+            padding: 24,
+            minHeight: 'calc(100vh - 112px)',
+            background: colorBgContainer,
+            borderRadius: borderRadiusLG,
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </Content>
       </Layout>
-    </RootLayout>
+    </Layout>
   );
 }

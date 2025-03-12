@@ -4,20 +4,19 @@ import { Form, Input, Button, message, FormProps } from "antd";
 import styles from './login.module.css'; // Import the CSS file for custom styles
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import client from "@/utils/client";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 type LoginValues = {
-  email?: string;
+  name?: string;
   password?: string;
 };
 
 const LoginPage: React.FC = () => {
-  const router = useRouter()
   const onFinish: FormProps<LoginValues>['onFinish'] = async (values) => {
     try {
       await client.post("/login", values);
       message.success("Login successful!");
-      router.push("/");
+      redirect("/");
     } catch (error) {
       console.error(error);
     }

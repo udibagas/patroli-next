@@ -1,3 +1,4 @@
+import { createSession } from "@/app/lib/session";
 import User from "@/models/User";
 import { NextRequest } from "next/server";
 
@@ -17,18 +18,8 @@ export async function POST(request: NextRequest) {
       throw new Error("Username atau password salah");
     }
 
-    const token = await user.generateToken();
-    return Response.json(
-      { token, user },
-      {
-        status: 200,
-        headers: {
-          "Set-Cookie": `token=${token}; HttpOnly; Path=/; SameSite=Strict; Max-Age=${
-            60 * 60 * 24 * 7
-          }`,
-        },
-      }
-    );
+    const token = await createSession(user);
+    return Response.json({ token, user: user.toJSON() });
   } catch (error) {
     return Response.json(
       { message: (error as Error).message },

@@ -10,7 +10,7 @@ interface SessionPayload extends Record<string, unknown> {
   expiresAt: Date;
 }
 
-const secretKey = process.env.SESSION_SECRET;
+const secretKey = process.env.JWT_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: SessionPayload) {
@@ -22,6 +22,7 @@ export async function encrypt(payload: SessionPayload) {
 }
 
 export async function decrypt(session: string | undefined = "") {
+  console.log("session", session);
   const { payload } = await jwtVerify(session, encodedKey, {
     algorithms: ["HS256"],
   });
@@ -48,6 +49,8 @@ export async function createSession(user: User) {
     sameSite: "lax",
     path: "/",
   });
+
+  return session;
 }
 
 export async function deleteSession() {

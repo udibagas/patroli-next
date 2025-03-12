@@ -13,8 +13,14 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<number>;
   declare name: string;
   declare role: "admin" | "user";
-  declare password: string;
+  declare password?: string;
   declare SiteId: number;
+
+  public toJSON(): object {
+    const values = Object.assign({}, this.get());
+    delete values.password;
+    return values;
+  }
 }
 
 User.init(
